@@ -1,0 +1,227 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// Generated with: figlet -f standard "jfergITLife"
+const logoLines = [
+  "   _  __                ___ _____ _     _  __      ",
+  "  (_)/ _| ___ _ __ __ _|_ _|_   _| |   (_)/ _| ___ ",
+  "  | | |_ / _ \\ '__/ _\` || |  | | | |   | | |_ / _ \\",
+  "  | |  _|  __/ | | (_| || |  | | | |___| |  _|  __/",
+  " _/ |_|  \\___|_|  \\__, |___| |_| |_____|_|_|  \\___|",
+  "|__/              |___/                            ",
+];
+---
+<Base title="JfergITLife — Coming Soon" description="Writing about cloud security, GRC engineering, and what I'm building.">
+  <main class="container">
+
+    <div class="prompt">
+      <span class="user">jacob@blog</span>:<span class="host">~</span>$ <span class="cmd">tail -f notes.log</span>
+    </div>
+
+    <pre class="logo" aria-label="JfergITLife"><span class="row-1">{logoLines[0]}</span>
+<span class="row-2">{logoLines[1]}</span>
+<span class="row-3">{logoLines[2]}</span>
+<span class="row-4">{logoLines[3]}</span>
+<span class="row-5">{logoLines[4]}</span>
+<span class="row-6">{logoLines[5]}</span></pre>
+
+    <p class="tagline">// writing about cloud security, grc engineering, and what i'm building.</p>
+
+    <div class="teaser">
+      <p>
+        First post drops soon. Topics in the queue: provable evidence for SOC 2, why most compliance dashboards lie, building agents that audit themselves.
+      </p>
+      <p class="muted">
+        No fluff. No newsletter-bait. Just what i'm learning while i build.
+      </p>
+    </div>
+
+    <div class="subscribe-card">
+      <div class="sub-prompt">
+        <span class="gold-text">$</span> subscribe --email
+      </div>
+      <form class="sub-form" id="sub-form">
+        <input
+          type="email"
+          name="email"
+          placeholder="you@domain.com"
+          required
+          aria-label="Email address"
+        />
+        <button type="submit">notify me</button>
+      </form>
+      <div class="sub-hint">
+        // no spam. unsubscribe anytime. ~1 email per post.
+      </div>
+      <div class="sub-status" id="sub-status" hidden></div>
+    </div>
+
+    <footer>
+      <div class="links">
+        <a href="/">← back to portfolio</a>
+        <a href="https://linkedin.com/in/itlife" target="_blank" rel="noopener">linkedin →</a>
+        <a href="https://github.com/jfergITLife" target="_blank" rel="noopener">github →</a>
+      </div>
+      <div class="end">
+        <span style="color: var(--gold);">▊</span> waiting for input...
+      </div>
+    </footer>
+
+  </main>
+
+  <style>
+    main {
+      padding-top: 1rem;
+    }
+
+    .logo {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.1;
+      margin: 0 0 1.5rem;
+      padding: 0;
+      white-space: pre;
+      overflow-x: auto;
+      font-weight: 500;
+    }
+
+    .logo .row-1, .logo .row-2 { color: var(--purple); }
+    .logo .row-3 { color: var(--purple-mid); }
+    .logo .row-4 { color: var(--indigo); }
+    .logo .row-5 { color: var(--periwinkle); }
+    .logo .row-6 { color: var(--blue); }
+
+    .tagline {
+      font-size: 15px;
+      color: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    .teaser {
+      border-left: 2px solid var(--gold);
+      padding-left: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .teaser p {
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 0.75rem;
+    }
+
+    .teaser p:last-child {
+      margin-bottom: 0;
+    }
+
+    .teaser .muted {
+      color: var(--text-muted);
+    }
+
+    .subscribe-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .sub-prompt {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .gold-text {
+      color: var(--gold);
+    }
+
+    .sub-form {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sub-form input {
+      flex: 1;
+      min-width: 200px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .sub-form input:focus {
+      border-color: var(--gold);
+    }
+
+    .sub-form button {
+      background: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      padding: 10px 18px;
+      color: var(--bg);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+
+    .sub-form button:hover {
+      opacity: 0.85;
+    }
+
+    .sub-hint {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 10px;
+    }
+
+    .sub-status {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--teal);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+
+    .links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .links a {
+      font-size: 13px;
+    }
+
+    .end {
+      margin-top: 1.5rem;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+  </style>
+
+  <script>
+    // Placeholder handler. Replace with Buttondown/ConvertKit endpoint when ready.
+    const form = document.getElementById('sub-form') as HTMLFormElement;
+    const status = document.getElementById('sub-status') as HTMLDivElement;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+      // TODO: POST to your newsletter provider here.
+      console.log('Email captured:', email);
+      status.textContent = `// thanks. you're on the list.`;
+      status.hidden = false;
+      form.reset();
+    });
+  </script>
+</Base>
