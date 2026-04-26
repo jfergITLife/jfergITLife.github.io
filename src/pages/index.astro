@@ -54,7 +54,7 @@ const certs = [
 
     <section class="hero">
       <div class="avatar">
-        <span class="placeholder">[ headshot ]</span>
+        <img src="/images/headshot.jpg" alt="Jacob Ferguson" />
       </div>
       <h1>Jacob Ferguson</h1>
       <p class="tagline">grc engineer. navy veteran. building provable security.</p>
@@ -171,6 +171,12 @@ const certs = [
       margin-bottom: 1.5rem;
       overflow: hidden;
     }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
     .avatar .placeholder {
       color: var(--text-dim);
