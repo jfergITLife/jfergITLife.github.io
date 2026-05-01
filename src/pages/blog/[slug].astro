@@ -1,0 +1,215 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => {
+    return data.draft !== true;
+  });
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const formattedDate = post.data.pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Base title={`${post.data.title} — JFergITLife`} description={post.data.description}>
+  <main class="terminal post">
+    <div class="prompt-line">
+      <span class="user">jacob@blog</span><span class="punct">:</span><span class="path">~/posts</span><span class="punct">$</span>
+      <span class="cmd">cat {post.slug}.md</span>
+    </div>
+
+    <article class="post-content">
+      <header class="post-header">
+        <h1 class="post-title">{post.data.title}</h1>
+        <p class="post-meta">
+          <span class="comment">//</span> {formattedDate}
+          {post.data.tags.length > 0 && (
+            <span class="tags">
+              {post.data.tags.map((tag) => (
+                <span class="tag">#{tag}</span>
+              ))}
+            </span>
+          )}
+        </p>
+      </header>
+
+      <div class="post-body">
+        <Content />
+      </div>
+
+      <footer class="share-note">
+        <p>
+          <span class="comment">//</span> no tracking. no cookies. no analytics. i have no clue if anyone reads this.
+        </p>
+        <p>
+          <span class="comment">//</span> if you find value, copy the url and share with a friend.
+        </p>
+      </footer>
+    </article>
+
+    <nav class="post-nav">
+      <a href="/blog">← back to notes.log</a>
+    </nav>
+  </main>
+</Base>
+
+<style>
+  .post {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .prompt-line {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    color: #94a3b8;
+  }
+
+  .prompt-line .user { color: #4ade80; }
+  .prompt-line .path { color: #60a5fa; }
+  .prompt-line .punct { color: #94a3b8; }
+  .prompt-line .cmd { color: #e2e8f0; }
+
+  .post-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #334155;
+  }
+
+  .post-title {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    background: linear-gradient(180deg, #a855f7 0%, #ec4899 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+  }
+
+  .post-meta {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  .post-meta .comment { color: #fbbf24; margin-right: 0.5rem; }
+  .post-meta .tags { margin-left: 1rem; }
+  .post-meta .tag {
+    color: #60a5fa;
+    margin-right: 0.5rem;
+  }
+
+  .post-body {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #e2e8f0;
+  }
+
+  .post-body :global(p) {
+    margin: 0 0 1.5rem 0;
+  }
+
+  .post-body :global(a) {
+    color: #60a5fa;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .post-body :global(a:hover) {
+    color: #93c5fd;
+  }
+
+  .post-body :global(code) {
+    background: #1e293b;
+    padding: 0.125rem 0.375rem;
+    border-radius: 3px;
+    font-size: 0.875em;
+  }
+
+  .post-body :global(pre) {
+    background: #1e293b;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  .post-body :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  .post-body :global(blockquote) {
+    border-left: 3px solid #fbbf24;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: #cbd5e1;
+    font-style: italic;
+  }
+
+  .post-body :global(h2) {
+    font-size: 1.5rem;
+    margin: 2.5rem 0 1rem 0;
+    color: #e2e8f0;
+  }
+
+  .post-body :global(h3) {
+    font-size: 1.25rem;
+    margin: 2rem 0 0.75rem 0;
+    color: #e2e8f0;
+  }
+
+  .share-note {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #334155;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 0.875rem;
+    color: #94a3b8;
+  }
+
+  .share-note p {
+    margin: 0 0 0.5rem 0;
+  }
+
+  .share-note .comment {
+    color: #fbbf24;
+    margin-right: 0.5rem;
+  }
+
+  .post-nav {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #334155;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  }
+
+  .post-nav a {
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .post-nav a:hover {
+    color: #93c5fd;
+    text-decoration: underline;
+  }
+</style>

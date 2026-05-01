@@ -1,14 +1,27 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+
+const posts = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const formatDate = (date) =>
+  date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+  });
 ---
 
-<Base title="JFergITLife — notes.log" description="A blog by Jacob Ferguson on cloud security, GRC engineering, tech history, and whatever else is on my mind.">
+<Base title="JFergITLife — notes.log" description="Welcome to my brain. Write-ups on new tech, old tech, opinions, deep thoughts, and the occasional rant. A thinking place that happens to be public.">
   <main class="terminal">
     <div class="prompt-line">
       <span class="user">jacob@blog</span><span class="punct">:</span><span class="path">~</span><span class="punct">$</span>
       <span class="cmd">tail -f notes.log</span>
     </div>
-
     <h1 class="ascii-title" aria-label="JFergITLife">
 <pre>{`
      _ _____                ___ _____ _      _  __     
@@ -19,17 +32,18 @@ import Base from '../../layouts/Base.astro';
                     |___/                               
 `}</pre>
     </h1>
-
     <p class="tagline">
       <span class="comment">//</span> freedom to write is freedom to think. this is where i do both.
     </p>
-
     <section class="callout">
       <p>
-        welcome to my brain. you'll find write-ups on new tech trends, old tech trends, opinions, deep thoughts, and the occasional rant. this is my thinking place and it is public. 
+        welcome to my brain. you'll find write-ups on new tech trends, old tech trends,
+        opinions, deep thoughts, and the occasional rant. this is my thinking place and
+        it is public.
       </p>
       <p>
-        marcus aurelius wrote meditations for himself. it was never meant to be published. look where it ended up. 
+        marcus aurelius wrote meditations for himself. it was never meant to be published.
+        look where it ended up.
       </p>
     </section>
 
@@ -38,242 +52,284 @@ import Base from '../../layouts/Base.astro';
         <span class="user">jacob@blog</span><span class="punct">:</span><span class="path">~/posts</span><span class="punct">$</span>
         <span class="cmd">ls -lt</span>
       </div>
-      <pre class="ls-output">{`total 0
--- no posts yet. first one drops soon. --`}</pre>
+
+      {posts.length === 0 ? (
+        <div class="empty-state">
+          <p class="ls-output">total 0</p>
+          <p class="ls-output">-- no posts yet. first one drops soon. --</p>
+        </div>
+      ) : (
+        <ul class="post-list">
+          <li class="ls-output total">total {posts.length}</li>
+          {posts.map((post) => (
+            <li class="post-item">
+              <a href={`/blog/${post.slug}`} class="post-link">
+                <span class="ls-perms">-rw-r--r--</span>
+                <span class="ls-date">{formatDate(post.data.pubDate)}</span>
+                <span class="ls-title">{post.data.title}</span>
+              </a>
+              <p class="post-desc">
+                <span class="comment">//</span> {post.data.description}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
 
-    <section class="subscribe" aria-label="Subscribe">
+    <section class="subscribe-block">
       <div class="prompt-line small">
         <span class="user">jacob@blog</span><span class="punct">:</span><span class="path">~</span><span class="punct">$</span>
         <span class="cmd">subscribe --email</span>
       </div>
-
       <form
         action="https://buttondown.com/api/emails/embed-subscribe/JfergITLife"
         method="post"
         target="popupwindow"
         onsubmit="window.open('https://buttondown.com/JfergITLife', 'popupwindow')"
-        class="sub-form"
+        class="subscribe-form"
       >
-        <label for="bd-email" class="sr-only">Email address</label>
-        <input
-          id="bd-email"
-          type="email"
-          name="email"
-          placeholder="you@domain.com"
-          autocomplete="email"
-          required
-        />
+        <input type="email" name="email" id="bd-email" placeholder="you@domain.com" required />
         <button type="submit">notify me</button>
       </form>
-
-      <p class="fineprint">
+      <p class="subscribe-note">
         <span class="comment">//</span> no spam. unsubscribe anytime. ~1 email per post.
       </p>
     </section>
 
-    <hr class="divider" />
-
-    <nav class="footer-nav" aria-label="Footer">
+    <footer class="footer-nav">
       <a href="/">← back to portfolio</a>
-      <a href="https://www.linkedin.com/in/itlife" target="_blank" rel="noopener noreferrer">linkedin →</a>
-      <a href="https://github.com/jfergITLife" target="_blank" rel="noopener noreferrer">github →</a>
-    </nav>
-
-    <div class="cursor-line" aria-hidden="true">
-      <span class="block-cursor"></span>
-      <span class="muted">waiting for input...</span>
-    </div>
+      <a href="https://www.linkedin.com/in/jfergitlife/" target="_blank" rel="noopener">linkedin →</a>
+      <a href="https://github.com/jfergITLife" target="_blank" rel="noopener">github →</a>
+    </footer>
   </main>
 </Base>
 
 <style>
   .terminal {
-    max-width: 760px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 4rem 1.5rem 6rem;
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-    color: var(--fg, #e6e6e6);
-    line-height: 1.6;
+    padding: 2rem 1.5rem;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    color: #e2e8f0;
   }
 
   .prompt-line {
-    margin-bottom: 1.25rem;
-    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    color: #94a3b8;
   }
 
   .prompt-line.small {
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
   }
 
-  .user { color: var(--accent-green, #7ee787); }
-  .path { color: var(--accent-blue, #79c0ff); }
-  .punct { color: var(--muted, #8b949e); }
-  .cmd { color: var(--fg, #e6e6e6); }
-  .comment { color: var(--muted, #8b949e); }
+  .prompt-line .user { color: #4ade80; }
+  .prompt-line .path { color: #60a5fa; }
+  .prompt-line .punct { color: #94a3b8; }
+  .prompt-line .cmd { color: #e2e8f0; }
 
   .ascii-title {
-    margin: 0.5rem 0 1.5rem;
-    font-size: 0.7rem;
-    line-height: 1.1;
+    margin: 0 0 1rem 0;
+    overflow-x: hidden;
   }
 
   .ascii-title pre {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: clamp(0.5rem, 2.2vw, 1rem);
+    line-height: 1.1;
     margin: 0;
     background: linear-gradient(180deg, #a855f7 0%, #ec4899 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-    font-family: inherit;
-    font-weight: 700;
-    font-size: clamp(0.5rem, 2.2vw, 1rem);
-    overflow-x: auto;
     white-space: pre;
   }
 
   .tagline {
-    color: var(--accent-gold, #c9a84c);
-    margin: 0 0 2rem;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    color: #fbbf24;
+    margin: 0 0 2rem 0;
+  }
+
+  .tagline .comment {
+    color: #fbbf24;
+    margin-right: 0.5rem;
   }
 
   .callout {
-    border-left: 2px solid var(--accent-gold, #c9a84c);
-    padding: 0.25rem 0 0.25rem 1rem;
-    margin: 0 0 2.5rem;
-    color: var(--fg, #e6e6e6);
+    border-left: 3px solid #fbbf24;
+    padding: 0.75rem 1rem;
+    margin: 0 0 2.5rem 0;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.65;
   }
 
-  .callout p { margin: 0 0 0.85rem; }
-  .callout p:last-child { margin-bottom: 0; }
+  .callout p {
+    margin: 0 0 0.875rem 0;
+  }
 
-  .ls-block { margin: 0 0 2.5rem; }
+  .callout p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ls-block {
+    margin: 0 0 2.5rem 0;
+  }
 
   .ls-output {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .empty-state .ls-output {
+    color: #64748b;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
     margin: 0;
-    padding: 0.5rem 0 0;
-    color: var(--muted, #8b949e);
-    font-family: inherit;
-    font-size: 0.95rem;
   }
 
-  .subscribe {
-    border: 1px solid var(--border, #30363d);
+  .post-list .total {
+    color: #94a3b8;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-item {
+    margin-bottom: 1.25rem;
+  }
+
+  .post-link {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    text-decoration: none;
+    font-size: 0.875rem;
+    padding: 0.25rem 0;
+  }
+
+  .post-link:hover .ls-title {
+    color: #93c5fd;
+    text-decoration: underline;
+  }
+
+  .ls-perms {
+    color: #64748b;
+    font-size: 0.8125rem;
+  }
+
+  .ls-date {
+    color: #94a3b8;
+    font-size: 0.8125rem;
+  }
+
+  .ls-title {
+    color: #60a5fa;
+    font-weight: 500;
+  }
+
+  .post-desc {
+    font-size: 0.8125rem;
+    color: #94a3b8;
+    margin: 0.25rem 0 0 0;
+    padding-left: 0;
+  }
+
+  .post-desc .comment {
+    color: #fbbf24;
+    margin-right: 0.5rem;
+  }
+
+  .subscribe-block {
+    margin: 0 0 2.5rem 0;
+    padding: 1.25rem;
+    background: #1e293b;
     border-radius: 6px;
-    padding: 1.25rem 1.25rem 1rem;
-    margin: 0 0 2.5rem;
-    background: rgba(255, 255, 255, 0.02);
   }
 
-  .sub-form {
+  .subscribe-form {
     display: flex;
     gap: 0.5rem;
-    margin: 0.5rem 0 0.75rem;
+    margin-bottom: 0.75rem;
   }
 
-  .sub-form input[type="email"] {
+  .subscribe-form input[type="email"] {
     flex: 1;
-    background: var(--bg-input, #0d1117);
-    border: 1px solid var(--border, #30363d);
-    color: var(--fg, #e6e6e6);
-    padding: 0.6rem 0.8rem;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    padding: 0.5rem 0.75rem;
     border-radius: 4px;
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
   }
 
-  .sub-form input[type="email"]:focus {
+  .subscribe-form input[type="email"]::placeholder {
+    color: #64748b;
+  }
+
+  .subscribe-form input[type="email"]:focus {
     outline: none;
-    border-color: var(--accent-gold, #c9a84c);
+    border-color: #fbbf24;
   }
 
-  .sub-form button {
-    background: var(--accent-gold, #c9a84c);
-    color: #1a1a1a;
+  .subscribe-form button {
+    background: #fbbf24;
+    color: #0f172a;
     border: none;
-    padding: 0 1.1rem;
+    padding: 0.5rem 1rem;
     border-radius: 4px;
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 120ms ease;
   }
 
-  .sub-form button:hover { background: #d6b65c; }
-  .sub-form button:active { transform: translateY(1px); }
+  .subscribe-form button:hover {
+    background: #f59e0b;
+  }
 
-  .fineprint {
+  .subscribe-note {
+    font-size: 0.8125rem;
+    color: #94a3b8;
     margin: 0;
-    color: var(--muted, #8b949e);
-    font-size: 0.85rem;
   }
 
-  .divider {
-    border: 0;
-    border-top: 1px solid var(--border, #30363d);
-    margin: 2rem 0;
+  .subscribe-note .comment {
+    color: #fbbf24;
+    margin-right: 0.5rem;
   }
 
   .footer-nav {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #334155;
     display: flex;
+    gap: 1.5rem;
     flex-wrap: wrap;
-    gap: 1.25rem;
-    margin-bottom: 2rem;
+    font-size: 0.875rem;
   }
 
   .footer-nav a {
-    color: var(--accent-blue, #79c0ff);
+    color: #60a5fa;
     text-decoration: none;
-    border-bottom: 1px dashed transparent;
-    font-size: 0.95rem;
   }
 
   .footer-nav a:hover {
-    border-bottom-color: var(--accent-blue, #79c0ff);
+    color: #93c5fd;
+    text-decoration: underline;
   }
 
-  .cursor-line {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    color: var(--muted, #8b949e);
-    font-size: 0.9rem;
-  }
-
-  .block-cursor {
-    display: inline-block;
-    width: 0.55rem;
-    height: 1.05rem;
-    background: var(--accent-gold, #c9a84c);
-    animation: blink 1.05s steps(2, start) infinite;
-  }
-
-  .muted { color: var(--muted, #8b949e); }
-
-  @keyframes blink {
-    to { visibility: hidden; }
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  @media (max-width: 560px) {
-    .terminal { padding: 2.5rem 1rem 4rem; }
-    .ascii-title { font-size: 0.55rem; }
-    .sub-form { flex-direction: column; }
-    .sub-form button { padding: 0.7rem 1rem; }
+  @media (max-width: 480px) {
+    .post-link {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
   }
 </style>
-</Base>
