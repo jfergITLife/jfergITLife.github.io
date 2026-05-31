@@ -6,7 +6,7 @@ export interface Props {
 
 const {
   title,
-  description = "Jacob Ferguson — GRC engineer, Navy veteran, building provable security."
+  description = "Jacob Ferguson portfolio for network engineering, systems administration, and infrastructure support roles."
 } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <title>{title}</title>
   </head>
@@ -34,20 +34,15 @@ const {
     <slot />
     <style is:global>
       :root {
-        --bg: #1a1d21;
-        --bg-card: #22252a;
-        --border: #3a3d42;
-        --text: #d4d4d4;
-        --text-muted: #9ca3af;
-        --text-dim: #6a737d;
-        --gold: #c9a84c;
-        --blue: #569cd6;
-        --teal: #4ec9b0;
-        --purple: #c586c0;
-        --purple-mid: #b076c4;
-        --indigo: #8a7ad0;
-        --periwinkle: #6e83d8;
-        --font-mono: 'JetBrains Mono', 'Courier New', Consolas, Monaco, monospace;
+        color-scheme: dark;
+        --bg: #081112;
+        --paper: rgba(13, 25, 27, 0.86);
+        --ink: #eef7f4;
+        --muted: #a4b5b1;
+        --line: rgba(167, 215, 205, 0.17);
+        --accent: #40d39a;
+        --accent-soft: #8ef0c7;
+        --font-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
       * {
@@ -58,37 +53,20 @@ const {
         margin: 0;
         padding: 0;
         background: var(--bg);
-        color: var(--text);
-        font-family: var(--font-mono);
+        color: var(--ink);
+        font-family: var(--font-sans);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
 
       body {
         min-height: 100vh;
-        padding: 3rem 1.5rem;
+        line-height: 1.55;
       }
-
-      .container {
-        max-width: 720px;
-        margin: 0 auto;
-      }
-
-      .prompt {
-        font-size: 12px;
-        color: var(--text-dim);
-        margin-bottom: 1rem;
-      }
-
-      .prompt .user { color: var(--purple); }
-      .prompt .host { color: var(--blue); }
-      .prompt .cmd { color: var(--teal); }
 
       a {
-        color: var(--blue);
+        color: inherit;
         text-decoration: none;
-        border-bottom: 1px solid var(--blue);
-        padding-bottom: 2px;
         transition: opacity 0.15s ease;
       }
 
@@ -96,14 +74,9 @@ const {
         opacity: 0.75;
       }
 
-      a.gold {
-        color: var(--gold);
-        border-bottom-color: var(--gold);
-      }
-
       h1, h2, h3 {
-        font-family: var(--font-mono);
-        font-weight: 500;
+        font-family: var(--font-sans);
+        font-weight: 800;
         margin: 0;
       }
 

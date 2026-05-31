@@ -1,383 +1,544 @@
 ---
 import Base from '../layouts/Base.astro';
 
+const proof = [
+  {
+    title: 'Target Roles',
+    text: 'Network technician, junior network engineer, systems administrator, infrastructure support.',
+  },
+  {
+    title: 'Core Strengths',
+    text: 'Subnetting, VLANs, routing basics, Linux, Windows, IAM, cloud labs, scripting, troubleshooting.',
+  },
+  {
+    title: 'Certifications',
+    text: 'Security+ · Network+ · A+ · SC-900 · AZ-900 · MS-900 · BTL1 · ITIL',
+  },
+];
+
 const projects = [
   {
-    id: 'terraform',
-    number: '01',
-    title: 'Terraform GCP Lab',
-    description: 'Least-privilege bucket deploy with auditable apply trail.',
-    stack: 'terraform · gcp · iam',
-    videoId: 'oKp5Nt4Jdto',
-    videoLabel: 'terraform_gcp_lab.mp4',
-    repoUrl: 'https://github.com/jfergITLife/grc-engineering-lab',
+    title: 'Terraform GCP Infrastructure Lab',
+    text: 'Repeatable cloud deployment with IAM, storage configuration, and rebuildable documentation.',
+    stack: 'Terraform · GCP · IAM',
   },
   {
-    id: 's3',
-    number: '02',
-    title: 'S3 Public Access Auditor',
-    description: 'Scans AWS buckets for public exposure. SHA-256 evidence chain.',
-    stack: 'python · boto3 · aws',
-    videoId: 'TqSF1EqRdoI',
-    videoLabel: 's3_public_access_auditor.mp4',
-    repoUrl: 'https://github.com/jfergITLife/grc-engineering-lab',
+    title: 'Python Infrastructure Exposure Scanner',
+    text: 'Admin utility for enumerating AWS storage exposure and turning findings into remediation steps.',
+    stack: 'Python · boto3 · AWS',
   },
   {
-    id: 'aws',
-    number: '03',
-    title: 'AWS Automated Access Review',
-    description: 'Multi-framework IAM audit with mapped control evidence.',
-    stack: 'python · aws · cis · soc 2',
-    videoId: 'aCdDfTN2XNo',
-    videoLabel: 'aws_automated_access_review.mp4',
-    repoUrl: 'https://github.com/jfergITLife/grc-aws-access-review',
+    title: 'Automated Access Review Toolkit',
+    text: 'Collects IAM data, normalizes account access, and produces concise review output.',
+    stack: 'Python · AWS IAM · CSV',
   },
-];
-
-const certs = [
-  'Security+',
-  'Network+',
-  'A+',
-  'SC-900',
-  'AZ-900',
-  'MS-900',
-  'BTL1',
-  'ITIL',
 ];
 ---
-<Base title="Jacob Ferguson — cybersecurity engineer">
-  <main class="container">
 
-    <div class="prompt">
-      <span class="user">jacob@portfolio</span>:<span class="host">~</span>$ <span class="cmd">whoami</span>
-    </div>
+<Base
+  title="Jacob Ferguson | Network Engineering & Systems Administration"
+  description="Jacob Ferguson portfolio for network engineering, systems administration, and infrastructure support roles."
+>
+  <div class="network-bg" aria-hidden="true">
+    <span class="device router">RTR</span>
+    <span class="device switch">SW1</span>
+    <span class="device server">SRV</span>
+    <span class="device switch alt">SW2</span>
+    <span class="cable cable-one"></span>
+    <span class="cable cable-two"></span>
+    <span class="cable cable-three"></span>
+    <span class="port port-one"></span>
+    <span class="port port-two"></span>
+    <span class="port port-three"></span>
+  </div>
 
-    <section class="hero">
-      <div class="avatar">
-        <img src="/images/headshot.jpg" alt="Jacob Ferguson" />
-      </div>
-      <h1>Jacob Ferguson</h1>
-      <p class="tagline">cybersecurity engineer. navy veteran. building provable security.</p>
-      <p class="subtag">// rice mba '28 · houston, tx</p>
-    </section>
-
-    <section>
-      <div class="prompt">
-        <span class="user">jacob@portfolio</span>:<span class="host">~</span>$ <span class="cmd">cat about.md</span>
-      </div>
-      <div class="about">
-        <p>
-          Seven years in the Navy taught me that processes only matter if they hold up under pressure. I bring the same standard to security and compliance work.
+  <main class="page">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Houston, TX · Navy veteran</p>
+        <h1>Jacob Ferguson</h1>
+        <p class="role">Network Engineering · Systems Administration · Infrastructure Support</p>
+        <p class="summary">
+          Hands-on infrastructure practitioner focused on routed networks, Windows and Linux systems,
+          cloud foundations, automation, and clear operational documentation.
         </p>
-        <p>
-          I build tools that produce evidence machines can verify, not screenshots people have to trust. Currently focused on cloud security automation, AI governance, and turning compliance theater into engineered controls.
-        </p>
+        <div class="actions" aria-label="Profile links">
+          <a class="button primary" href="/resume.pdf" target="_blank">Resume</a>
+          <a class="button" href="https://www.linkedin.com/in/itlife" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
       </div>
-    </section>
+      <img class="portrait" src="/images/headshot.jpg" alt="Jacob Ferguson" />
+    </header>
 
-    <section>
-      <div class="prompt">
-        <span class="user">jacob@portfolio</span>:<span class="host">~</span>$ <span class="cmd">ls projects/</span>
-      </div>
-      <div class="grid">
-        {projects.map((p) => (
-          <article class="card">
-            <div class="card-num">// {p.number}</div>
-            <h3>{p.title}</h3>
-            <p class="card-desc">{p.description}</p>
-            <div class="card-stack">{p.stack}</div>
-            <div class="card-actions">
-              <a
-                class="gold watch"
-                data-video-id={p.videoId}
-                data-video-label={p.videoLabel}
-                href="#"
-              >▶ walkthrough</a>
-              <a href={p.repoUrl} target="_blank" rel="noopener">github →</a>
-            </div>
+    <section class="section quick-read" aria-labelledby="quick-read-title">
+      <h2 id="quick-read-title">30-second read</h2>
+      <div class="proof-grid">
+        {proof.map((item) => (
+          <article>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
           </article>
         ))}
       </div>
+    </section>
 
-      <div id="video-panel" class="video-panel" hidden>
-        <div class="video-header">
-          <span id="video-label" class="video-title">▶ playing</span>
-          <button id="video-close" class="video-close" type="button">[ x close ]</button>
-        </div>
-        <div class="video-frame-wrap">
-          <iframe
-            id="video-frame"
-            src=""
-            title="Project walkthrough"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
+    <section class="section" aria-labelledby="projects-title">
+      <div class="section-heading">
+        <h2 id="projects-title">Selected Projects</h2>
+        <p>Short, practical labs that show infrastructure thinking and admin automation.</p>
+      </div>
+
+      <div class="project-list">
+        {projects.map((project) => (
+          <article class="project">
+            <div>
+              <h3>{project.title}</h3>
+              <p>{project.text}</p>
+            </div>
+            <span>{project.stack}</span>
+          </article>
+        ))}
       </div>
     </section>
 
-    <section>
-      <div class="prompt">
-        <span class="user">jacob@portfolio</span>:<span class="host">~</span>$ <span class="cmd">cat certifications.txt</span>
-      </div>
-      <div class="cert-row">
-        {certs.map((c) => <span class="cert">{c}</span>)}
-      </div>
+    <section class="section focus" aria-labelledby="focus-title">
+      <h2 id="focus-title">Technical Focus</h2>
+      <ul>
+        <li>Network fundamentals: TCP/IP, DNS, DHCP, subnetting, VLANs, routing, VPN concepts.</li>
+        <li>Systems administration: Windows, Linux, endpoint baselines, patching, backups, logs.</li>
+        <li>Automation: Python, PowerShell, Bash, Terraform, structured checks, readable runbooks.</li>
+      </ul>
     </section>
 
-    <footer>
-      <div class="prompt">
-        <span class="user">jacob@portfolio</span>:<span class="host">~</span>$ <span class="cmd">connect</span>
-      </div>
-      <div class="links">
-        <a href="https://linkedin.com/in/itlife" target="_blank" rel="noopener">linkedin →</a>
-        <a href="https://github.com/jfergITLife" target="_blank" rel="noopener">github →</a>
-        <a href="/resume.pdf" target="_blank">resume.pdf →</a>
-        <a href="/blog" class="gold">blog →</a>
-      </div>
-      <div class="end">
-        <span style="color: var(--gold);">▊</span> end of file.
-      </div>
+    <footer class="footer">
+      <p>Open to network engineering, systems administration, and infrastructure support roles.</p>
+      <a href="https://www.linkedin.com/in/itlife" target="_blank" rel="noopener">Connect on LinkedIn</a>
     </footer>
-
   </main>
 
   <style>
-    main {
-      padding-top: 1rem;
+    :global(body) {
+      background:
+        linear-gradient(rgba(142, 240, 199, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142, 240, 199, 0.045) 1px, transparent 1px),
+        radial-gradient(circle at 82% 12%, rgba(64, 211, 154, 0.16), transparent 24rem),
+        radial-gradient(circle at 8% 28%, rgba(80, 160, 255, 0.1), transparent 20rem),
+        var(--bg);
+      background-size: 42px 42px, 42px 42px, auto, auto;
     }
 
-    section {
-      margin-bottom: 4rem;
+    .network-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .network-bg::before {
+      position: absolute;
+      top: 90px;
+      right: max(18px, calc((100vw - 1180px) / 2));
+      width: min(520px, 42vw);
+      height: 380px;
+      content: "";
+      border: 1px solid rgba(142, 240, 199, 0.1);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, transparent 23px, rgba(142, 240, 199, 0.08) 24px, transparent 25px),
+        linear-gradient(transparent 23px, rgba(142, 240, 199, 0.08) 24px, transparent 25px);
+      background-size: 48px 48px;
+      opacity: 0.72;
+    }
+
+    .device,
+    .cable,
+    .port {
+      position: absolute;
+      opacity: 0.3;
+    }
+
+    .device {
+      display: grid;
+      width: 86px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid rgba(142, 240, 199, 0.28);
+      border-radius: 6px;
+      background: rgba(9, 20, 22, 0.72);
+      color: var(--accent-soft);
+      font-size: 0.72rem;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .device::after {
+      position: absolute;
+      right: 8px;
+      bottom: 7px;
+      display: block;
+      width: 24px;
+      height: 4px;
+      content: "";
+      background:
+        linear-gradient(90deg, rgba(64, 211, 154, 0.76) 4px, transparent 4px 8px) repeat-x;
+      background-size: 8px 4px;
+    }
+
+    .router {
+      top: 122px;
+      right: 340px;
+    }
+
+    .switch {
+      top: 236px;
+      right: 180px;
+    }
+
+    .server {
+      top: 360px;
+      right: 380px;
+    }
+
+    .switch.alt {
+      top: 510px;
+      right: 92px;
+    }
+
+    .cable {
+      height: 1px;
+      background: rgba(142, 240, 199, 0.34);
+      transform-origin: left center;
+    }
+
+    .cable-one {
+      top: 180px;
+      right: 250px;
+      width: 190px;
+      transform: rotate(34deg);
+    }
+
+    .cable-two {
+      top: 300px;
+      right: 235px;
+      width: 220px;
+      transform: rotate(145deg);
+    }
+
+    .cable-three {
+      top: 456px;
+      right: 155px;
+      width: 250px;
+      transform: rotate(28deg);
+    }
+
+    .port {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(64, 211, 154, 0.08), 0 0 18px rgba(64, 211, 154, 0.45);
+    }
+
+    .port-one {
+      top: 176px;
+      right: 286px;
+    }
+
+    .port-two {
+      top: 315px;
+      right: 455px;
+    }
+
+    .port-three {
+      top: 466px;
+      right: 220px;
+    }
+
+    .page {
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 34px;
     }
 
     .hero {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 180px;
+      gap: 48px;
       align-items: center;
-      text-align: center;
-      margin-bottom: 4rem;
+      padding-bottom: 42px;
+      border-bottom: 1px solid var(--line);
     }
 
-    .avatar {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: #2a2d31;
-      border: 2px solid var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      overflow: hidden;
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
     }
 
-  .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-    .avatar .placeholder {
-      color: var(--text-dim);
-      font-size: 11px;
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
     }
 
     h1 {
-      font-size: 28px;
-      color: #e8e8e8;
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      font-size: clamp(3rem, 8vw, 5.8rem);
+      line-height: 0.96;
     }
 
-    .tagline {
-      font-size: 16px;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
+    h2 {
+      margin-bottom: 14px;
+      font-size: clamp(1.55rem, 3vw, 2.2rem);
+      line-height: 1.1;
     }
 
-    .subtag {
-      font-size: 13px;
-      color: var(--text-dim);
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1rem;
     }
 
-    .about {
-      border-left: 2px solid var(--gold);
-      padding-left: 1.25rem;
+    .role {
+      margin-bottom: 18px;
+      color: var(--accent-soft);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      font-weight: 800;
     }
 
-    .about p {
-      font-size: 15px;
-      line-height: 1.8;
-      margin-bottom: 1rem;
+    .summary {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
     }
 
-    .about p:last-child {
+    .portrait {
+      width: 180px;
+      height: 180px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .button.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #06110d;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      border-color: var(--accent);
+      opacity: 1;
+      outline: none;
+    }
+
+    .section {
+      padding: 38px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 18px;
+    }
+
+    .section-heading p {
+      max-width: 360px;
+      margin-bottom: 14px;
+      color: var(--muted);
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .proof-grid article,
+    .project {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .proof-grid article {
+      padding: 18px;
+    }
+
+    .proof-grid p,
+    .project p,
+    .focus li,
+    .footer p {
+      color: var(--muted);
+    }
+
+    .proof-grid p,
+    .project p {
       margin-bottom: 0;
     }
 
-    .grid {
+    .project-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 12px;
     }
 
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
+    .project {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 190px;
+      gap: 18px;
+      align-items: start;
+      padding: 18px;
     }
 
-    .card-num {
-      font-size: 11px;
-      color: var(--gold);
-      margin-bottom: 8px;
+    .project span {
+      color: var(--accent-soft);
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-align: right;
     }
 
-    .card h3 {
-      font-size: 15px;
-      color: #e8e8e8;
-      margin-bottom: 0.5rem;
+    .focus ul {
+      display: grid;
+      gap: 10px;
+      padding-left: 20px;
+      margin: 0;
     }
 
-    .card-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 12px;
-    }
-
-    .card-stack {
-      font-size: 11px;
-      color: var(--blue);
-      margin-bottom: 12px;
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 12px;
-      font-size: 11px;
-      margin-top: auto;
-    }
-
-    .video-panel {
-      margin-top: 1.5rem;
-      background: var(--bg-card);
-      border: 1px solid var(--gold);
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-    }
-
-    .video-panel[hidden] {
-      display: none;
-    }
-
-    .video-header {
+    .footer {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
+      gap: 18px;
+      padding-top: 26px;
+      font-weight: 800;
     }
 
-    .video-title {
-      font-size: 12px;
-      color: var(--gold);
+    .footer p {
+      margin: 0;
+      font-weight: 700;
     }
 
-    .video-close {
-      background: none;
-      border: none;
-      color: var(--text-dim);
-      font-size: 11px;
-      font-family: var(--font-mono);
-      cursor: pointer;
-      padding: 0;
+    .footer a {
+      color: var(--accent-soft);
     }
 
-    .video-close:hover {
-      color: var(--text);
-    }
+    @media (max-width: 760px) {
+      :global(body) {
+        background-size: 34px 34px, 34px 34px, auto, auto;
+      }
 
-    .video-frame-wrap {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      background: #0a0c0e;
-      border-radius: 8px;
-      overflow: hidden;
-    }
+      .network-bg {
+        opacity: 0.28;
+      }
 
-    .video-frame-wrap iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
+      .network-bg::before {
+        top: 18px;
+        right: -120px;
+        width: 300px;
+        height: 360px;
+      }
 
-    .cert-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+      .device {
+        width: 70px;
+        height: 32px;
+      }
 
-    .cert {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 6px 12px;
-      font-size: 12px;
-      color: var(--text);
-    }
+      .router {
+        top: 40px;
+        right: 18px;
+      }
 
-    footer {
-      border-top: 1px solid var(--border);
-      padding-top: 2rem;
-    }
+      .switch {
+        top: 132px;
+        right: -28px;
+      }
 
-    .links {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
+      .server,
+      .switch.alt,
+      .cable-three,
+      .port-three {
+        display: none;
+      }
 
-    .links a {
-      font-size: 14px;
-    }
+      .cable-one {
+        top: 86px;
+        right: 48px;
+        width: 110px;
+      }
 
-    .end {
-      margin-top: 2rem;
-      font-size: 11px;
-      color: var(--text-dim);
+      .cable-two {
+        top: 156px;
+        right: -2px;
+        width: 130px;
+      }
+
+      .port-one {
+        top: 83px;
+        right: 86px;
+      }
+
+      .port-two {
+        top: 165px;
+        right: 98px;
+      }
+
+      .page {
+        width: min(100% - 24px, 980px);
+        padding-top: 28px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .portrait {
+        grid-row: 1;
+        width: 132px;
+        height: 132px;
+      }
+
+      .proof-grid,
+      .project {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading,
+      .footer {
+        display: grid;
+      }
+
+      .project span {
+        text-align: left;
+      }
     }
   </style>
-
-  <script>
-    const panel = document.getElementById('video-panel') as HTMLDivElement;
-    const frame = document.getElementById('video-frame') as HTMLIFrameElement;
-    const label = document.getElementById('video-label') as HTMLSpanElement;
-    const closeBtn = document.getElementById('video-close') as HTMLButtonElement;
-
-    document.querySelectorAll<HTMLAnchorElement>('a.watch').forEach((link) => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const id = link.dataset.videoId;
-        const name = link.dataset.videoLabel;
-        if (!id || !name) return;
-        frame.src = `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&autoplay=1`;
-        label.textContent = `▶ playing: ${name}`;
-        panel.hidden = false;
-        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
-    });
-
-    closeBtn.addEventListener('click', () => {
-      frame.src = '';
-      panel.hidden = true;
-    });
-  </script>
 </Base>
